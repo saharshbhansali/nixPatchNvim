@@ -219,8 +219,8 @@
       # Environment variables set during neovim runtime.
       environmentVariables = { };
 
-      # Aliases for the patched config
-      aliases = [ "vim" "vi" ];
+      # # Aliases for the patched config
+      # aliases = [ "vim" "vi" ];
 
       # Extra wrapper args you want to pass.
       # Look here if you don't know what those are:
