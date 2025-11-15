@@ -140,10 +140,12 @@
           harpoon2
           inc-rename-nvim
           leap-nvim
+          flit-nvim
           overseer-nvim
           refactoring-nvim
           fzf-lua
           nvim-fzf
+          nvim-navic
           # pkgs.black
           vim-prettier
           gitsigns-nvim
