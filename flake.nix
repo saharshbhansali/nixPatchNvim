@@ -255,6 +255,8 @@
             ++ (patchUtils.stringSub "blink-cmp" "blink.cmp")
             ++ (patchUtils.stringSub "blink-compat" "blink.compat")
             ++ (patchUtils.stringSub "snacks-nvim" "snacks_explorer")
+            ++ (patchUtils.stringSub "mini-surround" "mini.surround")
+            ++ (patchUtils.stringSub "mini-snippets" "cmp-mini-snippets")
             ++ (patchUtils.stringSub "catppuccin-nvim" "catppuccin");
             # ++ (patchUtils.githubUrlSub "L3MON4D3/LuaSnip" "luasnip");
             # For example, if you want to add a plugin with the short url
