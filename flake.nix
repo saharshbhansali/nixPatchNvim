@@ -117,6 +117,7 @@
           #   ]
           # ))
           catppuccin-nvim
+          catppuccin-vim
           CopilotChat-nvim
           supermaven-nvim
           mini-nvim
