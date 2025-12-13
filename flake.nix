@@ -60,7 +60,7 @@
 
     configuration = { pkgs, system, ... }: 
     let
-      patchUtils = nixPatch.patchUtils.${pkgs.system};
+      patchUtils = nixPatch.patchUtils.${pkgs.stdenv.hostPlatform.system};
     in 
     {
       # The path to your neovim configuration.
