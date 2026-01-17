@@ -145,6 +145,7 @@
           overseer-nvim
           refactoring-nvim
           fzf-lua
+          vim-visual-multi
           nvim-fzf
           nvim-navic
           # pkgs.black
