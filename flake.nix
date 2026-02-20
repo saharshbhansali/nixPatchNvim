@@ -160,7 +160,7 @@
           yaml-companion-nvim
           dashboard-nvim
           indent-blankline-nvim
-          project-nvim
+          # project-nvim
           vim-repeat
           vim-startuptime
           venv-selector-nvim
@@ -258,7 +258,7 @@
             ++ (patchUtils.stringSub "snacks-nvim" "snacks_explorer")
             ++ (patchUtils.stringSub "mini-surround" "mini.surround")
             ++ (patchUtils.stringSub "mini-snippets" "cmp-mini-snippets")
-            ++ (patchUtils.stringSub "project-nvim" "project")
+            # ++ (patchUtils.stringSub "project-nvim" "project")
             ++ (patchUtils.stringSub "catppuccin-nvim" "catppuccin");
             # ++ (patchUtils.githubUrlSub "L3MON4D3/LuaSnip" "luasnip");
             # For example, if you want to add a plugin with the short url
