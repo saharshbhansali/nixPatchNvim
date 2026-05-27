@@ -19,160 +19,169 @@
     };
   };
 
-  outputs = { nixpkgs, nixPatch, ... }: 
-  let
+  outputs = {
+    nixpkgs,
+    nixPatch,
+    ...
+  }: let
     # Copied from flake utils
-    eachSystem = with builtins; systems: f:
-        let
+    eachSystem = with builtins;
+      systems: f: let
         # Merge together the outputs for all systems.
-        op = attrs: system:
-          let
+        op = attrs: system: let
           ret = f system;
-          op = attrs: key: attrs //
-            {
-              ${key} = (attrs.${key} or { })
-              // { ${system} = ret.${key}; };
-            }
-          ;
-          in
-          foldl' op attrs (attrNames ret);
+          op = attrs: key:
+            attrs
+            // {
+              ${key} =
+                (attrs.${key} or {})
+                // {
+                  ${system} = ret.${key};
+                };
+            };
         in
-        foldl' op { }
-        (systems
-          ++ # add the current system if --impure is used
-          (if builtins ? currentSystem then
-             if elem currentSystem systems
-             then []
-             else [ currentSystem ]
-          else []));
-    
+          foldl' op attrs (attrNames ret);
+      in
+        foldl' op {} (
+          systems
+          # add the current system if --impure is used
+          ++ (
+            if builtins ? currentSystem
+            then
+              if elem currentSystem systems
+              then []
+              else [currentSystem]
+            else []
+          )
+        );
+
     forEachSystem = eachSystem nixpkgs.lib.platforms.all;
-  in 
-  let
+  in let
     # Easily configure a custom name, this will affect the name of the standard
     # executable, you can add as many aliases as you'd like in the configuration.
     name = "nixPatch";
 
     # Any custom package config you would like to do.
     extra_pkg_config = {
-        allow_unfree = true;
+      allow_unfree = true;
     };
 
-    configuration = { pkgs, system, ... }: 
-    let
+    configuration = {
+      pkgs,
+      system,
+      ...
+    }: let
       patchUtils = nixPatch.patchUtils.${pkgs.stdenv.hostPlatform.system};
-    in 
-    {
+    in {
       # The path to your neovim configuration.
       luaPath = ./.;
 
       # Plugins you use in your configuration.
       plugins = with pkgs.vimPlugins; [
-          # LazyVim
-          lazy-nvim
-          LazyVim
-          bufferline-nvim
-          lazydev-nvim
-          conform-nvim
-          flash-nvim
-          alpha-nvim
-          luasnip
-          friendly-snippets
-          grug-far-nvim
-          edgy-nvim
-          aerial-nvim
-          outline-nvim
-          none-ls-nvim
-          noice-nvim
-          lualine-nvim
-          nui-nvim
-          nvim-lint
-          nvim-lspconfig
-          nvim-ts-autotag
-          ts-comments-nvim
-          blink-cmp
-          blink-compat
-          nvim-web-devicons
-          persistence-nvim
-          plenary-nvim
-          telescope-fzf-native-nvim
-          telescope-nvim
-          todo-comments-nvim
-          tokyonight-nvim
-          trouble-nvim
-          vim-illuminate
-          which-key-nvim
-          snacks-nvim
-          nvim-treesitter-textobjects
-          nvim-treesitter-context
-          nvim-treesitter-pairs
-          nvim-treesitter-endwise
-          # nvim-treesitter
-          nvim-treesitter.withAllGrammars
-          # This is for if you only want some of the grammars
-          # (nvim-treesitter.withPlugins (
-          #   plugins: with plugins; [
-          #     nix
-          #     lua
-          #   ]
-          # ))
-          catppuccin-nvim
-          catppuccin-vim
-          CopilotChat-nvim
-          supermaven-nvim
-          mini-nvim
-          mini-ai
-          mini-icons
-          mini-pairs
-          mini-comment
-          mini-snippets
-          mini-surround
-          mini-diff
-          mini-files
-          mini-move
-          mini-git
-          mini-extra
-          mini-doc
-          mini-indentscope
-          mini-hipatterns
-          neogen
-          yanky-nvim
-          dial-nvim
-          harpoon2
-          inc-rename-nvim
-          leap-nvim
-          flit-nvim
-          overseer-nvim
-          refactoring-nvim
-          fzf-lua
-          vim-visual-multi
-          nvim-fzf
-          nvim-navic
-          # pkgs.black
-          vim-prettier
-          gitsigns-nvim
-          go-nvim
-          nvim-jdtls
-          markdown-preview-nvim
-          # rustaceanvim
-          tailwindcss-colors-nvim
-          vimtex
-          yaml-companion-nvim
-          dashboard-nvim
-          indent-blankline-nvim
-          project-nvim
-          vim-repeat
-          vim-startuptime
-          venv-selector-nvim
-          render-markdown-nvim
-          litee-nvim
-          telescope-github-nvim
+        # LazyVim
+        lazy-nvim
+        LazyVim
+        bufferline-nvim
+        lazydev-nvim
+        conform-nvim
+        flash-nvim
+        alpha-nvim
+        luasnip
+        friendly-snippets
+        grug-far-nvim
+        edgy-nvim
+        aerial-nvim
+        outline-nvim
+        none-ls-nvim
+        noice-nvim
+        lualine-nvim
+        nui-nvim
+        nvim-lint
+        nvim-lspconfig
+        nvim-ts-autotag
+        ts-comments-nvim
+        blink-cmp
+        blink-compat
+        nvim-web-devicons
+        persistence-nvim
+        plenary-nvim
+        telescope-fzf-native-nvim
+        telescope-nvim
+        todo-comments-nvim
+        tokyonight-nvim
+        trouble-nvim
+        vim-illuminate
+        which-key-nvim
+        snacks-nvim
+        nvim-treesitter-textobjects
+        nvim-treesitter-context
+        nvim-treesitter-pairs
+        nvim-treesitter-endwise
+        # nvim-treesitter
+        nvim-treesitter.withAllGrammars
+        # This is for if you only want some of the grammars
+        # (nvim-treesitter.withPlugins (
+        #   plugins: with plugins; [
+        #     nix
+        #     lua
+        #   ]
+        # ))
+        catppuccin-nvim
+        catppuccin-vim
+        CopilotChat-nvim
+        supermaven-nvim
+        mini-nvim
+        mini-ai
+        mini-icons
+        mini-pairs
+        mini-comment
+        mini-snippets
+        mini-surround
+        mini-diff
+        mini-files
+        mini-move
+        mini-git
+        mini-extra
+        mini-doc
+        mini-indentscope
+        mini-hipatterns
+        neogen
+        yanky-nvim
+        dial-nvim
+        harpoon2
+        inc-rename-nvim
+        leap-nvim
+        flit-nvim
+        overseer-nvim
+        refactoring-nvim
+        fzf-lua
+        vim-visual-multi
+        nvim-fzf
+        nvim-navic
+        # pkgs.black
+        vim-prettier
+        gitsigns-nvim
+        go-nvim
+        nvim-jdtls
+        markdown-preview-nvim
+        # rustaceanvim
+        tailwindcss-colors-nvim
+        vimtex
+        yaml-companion-nvim
+        dashboard-nvim
+        indent-blankline-nvim
+        project-nvim
+        vim-repeat
+        vim-startuptime
+        venv-selector-nvim
+        render-markdown-nvim
+        litee-nvim
+        telescope-github-nvim
 
-          # Language-related utilities
-          vim-dadbod
-          vim-dadbod-ui
-          vim-dadbod-completion
-
+        # Language-related utilities
+        vim-dadbod
+        vim-dadbod-ui
+        vim-dadbod-completion
       ];
 
       # Runtime dependencies. This is thing like tree-sitter, lsps or programs
@@ -222,7 +231,7 @@
       ];
 
       # Environment variables set during neovim runtime.
-      environmentVariables = { };
+      environmentVariables = {};
 
       # # Aliases for the patched config
       # aliases = [ "vim" "vi" ];
@@ -230,45 +239,46 @@
       # Extra wrapper args you want to pass.
       # Look here if you don't know what those are:
       # https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/setup-hooks/make-wrapper.sh
-      extraWrapperArgs = [ ];
+      extraWrapperArgs = [];
 
       # Extra python packages for the neovim provider.
       # This must be a list of functions returning lists.
-      python3Packages = [ ];
+      python3Packages = [];
 
       # Wrapper args but then for the python provider.
-      extraPython3WrapperArgs = [ ];
+      extraPython3WrapperArgs = [];
 
       # Extra lua packages for the neovim lua runtime.
-      luaPackages = [ ];
+      luaPackages = [];
 
       # Extra shared libraries available at runtime.
-      sharedLibraries = [ ];
+      sharedLibraries = [];
 
       # Extra lua configuration put at the top of your init.lua
       # This cannot replace your init.lua, if none exists in your configuration
-      # this will not be writtern. 
+      # this will not be writtern.
       # Must be provided as a list of strings.
-      extraConfig = [ ];
+      extraConfig = [];
 
-      # Custom subsitutions you want the patcher to make. Custom subsitutions 
+      # Custom subsitutions you want the patcher to make. Custom subsitutions
       # can be generated using
-      customSubs = with patchUtils; []
-            ++ (patchUtils.stringSub "blink-cmp" "blink.cmp")
-            ++ (patchUtils.stringSub "blink-compat" "blink.compat")
-            ++ (patchUtils.stringSub "snacks-nvim" "snacks_explorer")
-            ++ (patchUtils.stringSub "mini-surround" "mini.surround")
-            ++ (patchUtils.stringSub "mini-snippets" "cmp-mini-snippets")
-            ++ (patchUtils.stringSub "project-nvim" "project")
-            ++ (patchUtils.stringSub "catppuccin-nvim" "catppuccin");
-            # ++ (patchUtils.githubUrlSub "L3MON4D3/LuaSnip" "luasnip");
-            # For example, if you want to add a plugin with the short url
-            # "cool/plugin" which is in nixpkgs as plugin-nvim you would do:
-            # ++ (patchUtils.githubUrlSub "cool/plugin" plugin-nvim);
-            # If you would want to replace the string "replace_me" with "replaced" 
-            # you would have to do:
-            # ++ (patchUtils.stringSub "replace_me" "replaced")
-            # For more examples look here: https://github.com/NicoElbers/nixPatch-nvim/blob/main/subPatches.nix
+      customSubs = with patchUtils;
+        []
+        ++ (patchUtils.stringSub "blink-cmp" "blink.cmp")
+        ++ (patchUtils.stringSub "blink-compat" "blink.compat")
+        ++ (patchUtils.stringSub "snacks-nvim" "snacks_explorer")
+        ++ (patchUtils.stringSub "mini-surround" "mini.surround")
+        ++ (patchUtils.stringSub "mini-snippets" "cmp-mini-snippets")
+        ++ (patchUtils.stringSub "project-nvim" "project")
+        ++ (patchUtils.stringSub "catppuccin-nvim" "catppuccin");
+      # ++ (patchUtils.githubUrlSub "L3MON4D3/LuaSnip" "luasnip");
+      # For example, if you want to add a plugin with the short url
+      # "cool/plugin" which is in nixpkgs as plugin-nvim you would do:
+      # ++ (patchUtils.githubUrlSub "cool/plugin" plugin-nvim);
+      # If you would want to replace the string "replace_me" with "replaced"
+      # you would have to do:
+      # ++ (patchUtils.stringSub "replace_me" "replaced")
+      # For more examples look here: https://github.com/NicoElbers/nixPatch-nvim/blob/main/subPatches.nix
 
       settings = {
         # Enable the NodeJs provider
@@ -283,7 +293,7 @@
         # Enable the python3 provider
         withPython3 = true;
 
-        # Any extra name 
+        # Any extra name
         extraName = "";
 
         # The default config directory for neovim
@@ -292,13 +302,13 @@
         # Any other neovim package you would like to use, for example nightly
         neovim-unwrapped = null;
 
-        # When using nightly, it's best to use the version nixPatch exposes, 
-        # this prevents potential linking errors if nixPatch isn't updated in a 
+        # When using nightly, it's best to use the version nixPatch exposes,
+        # this prevents potential linking errors if nixPatch isn't updated in a
         # while
         # neovim-unwrapped = inputs.nixPatch.neovim-nightly.${system};
 
         # Whether to add custom subsitution made in the original repo, makes for
-        # a better out of the box experience 
+        # a better out of the box experience
         patchSubs = true;
 
         # Whether to add runtime dependencies to the back of the path
@@ -308,9 +318,10 @@
         suffix-LD = false;
       };
     };
-  in 
-  forEachSystem (system: {
-    packages.default = 
-      nixPatch.configWrapper.${system} { inherit configuration extra_pkg_config name; };
-  });
+  in
+    forEachSystem (system: {
+      packages.default = nixPatch.configWrapper.${system} {
+        inherit configuration extra_pkg_config name;
+      };
+    });
 }
