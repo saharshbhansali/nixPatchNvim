@@ -200,7 +200,8 @@
         fd
         stdenv.cc.cc
         lua-language-server
-        nil # I would go for nixd but lazy chooses this one idk
+        # nil # I would go for nixd but lazy chooses this one idk
+        nixd
         stylua
         fzf
         tree-sitter
@@ -220,8 +221,10 @@
         texlab
         taplo
         marksman
-        nil
+        alejandra
         nixfmt
+        nixfmt-tree
+        nixpkgs-fmt
         lua51Packages.lua
         lua51Packages.luarocks
         lua51Packages.luarocks-nix
