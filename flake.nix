@@ -11,7 +11,8 @@
     # };
 
     nixPatch = {
-      url = "github:NicoElbers/nixPatch-nvim";
+      # url = "github:NicoElbers/nixPatch-nvim";
+      url = "git+https://codeberg.org/NicoElbers/nixPatch-nvim.git";
       inputs.nixpkgs.follows = "nixpkgs";
 
       # We do this so that we ensure neovim nightly actually updates
