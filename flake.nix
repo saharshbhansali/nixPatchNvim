@@ -128,7 +128,7 @@
         # ))
         catppuccin-nvim
         catppuccin-vim
-        CopilotChat-nvim
+        # CopilotChat-nvim
         supermaven-nvim
         mini-nvim
         mini-ai
@@ -229,7 +229,8 @@
         lua51Packages.luarocks
         lua51Packages.luarocks-nix
         lua51Packages.fzf-lua
-        nodejs_20
+        # nodejs_20
+        nodejs_22
         nodejs_24
       ];
 
