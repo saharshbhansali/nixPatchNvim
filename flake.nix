@@ -24,6 +24,8 @@
     nixPatch,
     ...
   }: let
+    nixpkgs.config.allowUnfree = true;
+
     # Copied from flake utils
     eachSystem = with builtins;
       systems: f: let
